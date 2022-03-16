@@ -1,3 +1,5 @@
+const { drawBackground } = require("pdfmake/src/textDecorator");
+
 module.exports ={
     header: {
         bold: true,
@@ -36,4 +38,20 @@ module.exports ={
         fontSize: 8,
         color: 'black'
     },
+    textoContrato: {
+        fontSize: 12,
+        color : 'back',
+        alignment: "justify",
+    },
+    headersContrato: {
+        bold: true,
+        fontSize: 12,
+        color : 'back',
+        alignment: "center",
+    },
+    headHojaContrato: {
+        fontSize: 8,
+        color : 'back',
+        alignment: "left",
+    }
 };

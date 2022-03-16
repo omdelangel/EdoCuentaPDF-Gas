@@ -43,4 +43,15 @@ function obtenEdoCtaMovimientos(data, callback) {
     //return callback(result);
 }
 
-module.exports = {obtenEdoCtaResumen, obtenEdoCtaMovimientos}
+function informacionContrato( data, callback) {
+    let spSQL = "Call spConsultaInfContrato(?)";
+    let query =mysql.format(spSQL, [data.IdContrato])
+    console.log(query);
+    
+    connection.query(query, function(err, result) {
+        if (err) throw err;
+        return callback(result);
+    });
+}
+
+module.exports = {obtenEdoCtaResumen, obtenEdoCtaMovimientos, informacionContrato}

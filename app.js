@@ -10,10 +10,11 @@ const fonts = require("./fonts");
 const styles = require("./styles");
 const {content} =  require("./pdfContent");
 const PdfDynamicContent =  require("./pdfDynamicContent");
+const ContratoTaxi =  require("./contratoTaxi");
 
 //require("dotenv").config();
 
-const {obtenEdoCtaResumen, obtenEdoCtaMovimientos } = require("./procesos");
+const {obtenEdoCtaResumen, obtenEdoCtaMovimientos, informacionContrato } = require("./procesos");
 
 app.use(express.json());
 
@@ -58,6 +59,40 @@ app.get("/estados-cuenta", (req, res) => {
         };
     });
 });
+
+
+
+app.get("/contrato-taxi", (req, res) => {
+    console.log("Iniciando " );
+    var movtosData=[];
+    var contratoData = [];
+    var pdfObj = [];
+   
+    let IdContract =  req.query.IdContrato; 
+    console.log("IdContrato: " + IdContract);
+    informacionContrato({IdContrato: 1}, result => {
+        contratoData = result;
+        console.log("preparando Información  para contrato: " + IdContract);
+        pdfObj = new ContratoTaxi(contratoData[0]);
+        let docDefinition = {
+                    pageSize: 'LETTER',
+                    pageMargins: [ 30, 30, 30, 30 ],
+                    header: pdfObj.gePdfHeader(),
+                    content: pdfObj.getPdfContent(),
+                    styles: styles,
+        };
+        const printer = new PdfPrinter(fonts);
+
+        let pdfDoc = printer.createPdfKitDocument(docDefinition);
+
+        pdfDoc.pipe(fs.createWriteStream("pdfs/Contract_"+contratoData[0][0].IdContrato+".pdf"));
+        pdfDoc.end();
+        pdfDoc.release;
+        pdfObj.destroy;
+    });
+        
+});
+
 
 /*
 const pdfObj =  new  PdfDynamicContent({fecha: dia});
