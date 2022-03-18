@@ -76,8 +76,9 @@ app.get("/contrato-taxi", (req, res) => {
         pdfObj = new ContratoTaxi(contratoData[0]);
         let docDefinition = {
                     pageSize: 'LETTER',
-                    pageMargins: [ 30, 30, 30, 30 ],
-                    header: pdfObj.gePdfHeader(),
+                    font: 'Arial Narrow',
+                    pageMargins: [ 60, 60, 60, 60 ],
+                    header: pdfObj.getPdfHeader(),
                     content: pdfObj.getPdfContent(),
                     styles: styles,
         };

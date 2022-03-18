@@ -40,7 +40,7 @@ module.exports ={
     },
     textoContrato: {
         fontSize: 12,
-        color : 'back',
+        color : 'black',
         alignment: "justify",
     },
     headersContrato: {
@@ -53,5 +53,15 @@ module.exports ={
         fontSize: 8,
         color : 'back',
         alignment: "left",
+    },
+    enumContrato: {
+        margin: [10, 0, 0, 0],
+        fontSize: 12,
+        alignment: 'justify'
+    },
+    emailContrato: {
+        fontSize: 12,
+        color: 'blue',
+        decoration: 'underline'
     }
 };
