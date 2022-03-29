@@ -32,12 +32,15 @@ app.get("/estados-cuenta", (req, res) => {
     var contratosData = [];
     var pdfObj = [];
 
-    obtenEdoCtaResumen({fecha: '2021-11-25'}, result => {
+    //let fechaCorte =  req.query.fechaCorte; 
+    let fechaCorte = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+
+    obtenEdoCtaResumen({fecha: fechaCorte}, result => {
         contratosData = result;
         for (let index = 0; index < contratosData[0].length; index++) {
             const contrato = contratosData[0][index];
             
-            obtenEdoCtaMovimientos({ contrato: contrato.IdContrato, fecha: '2021-11-25' }, result => {
+            obtenEdoCtaMovimientos({ contrato: contrato.IdContrato, fecha: fechaCorte }, result => {
                 movtosData = result;
                 console.log("preparando Edo Cta para contrato: " + contrato.IdContrato);
                 pdfObj = new PdfDynamicContent(contrato, movtosData);
